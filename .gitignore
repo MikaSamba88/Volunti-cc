@@ -6,6 +6,13 @@
 
 #.NET Build & Publish
 
+[Bb]in/
+[Ob]j/
+*.user
+*.userosscache
+*.sln.doccache
+.vs/
+
 bin/
 obj/
 publish/
