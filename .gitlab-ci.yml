@@ -28,6 +28,9 @@ include:
   - local: 'frontend/build.yml'
   - local: 'frontend/test.yml'
   - local: 'frontend/container-build.yml'
+  - local: 'monitoring/monitor-ci.yml'
+  - local: 'monitoring/prometheus.yml'
+  - local: 'monitoring/monitor-stack.yml'
   - local: 'frontend/deploy.yml'
   - template: Security/SAST.gitlab-ci.yml
   - template: Jobs/Secret-Detection.gitlab-ci.yml
