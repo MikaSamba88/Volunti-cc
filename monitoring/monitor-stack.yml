@@ -1,0 +1,96 @@
+version: "3.8"
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsbd.retention.time=15d'
+      - 'web.enable-lifecycle'
+    configs:
+      - source: prometheus_config
+        target: /etc/prometheus/prometheus.yml
+    volumes:
+      - prometheus_data:/prometheus
+    networks:
+      - monitoring
+      - traefik-public
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-publi"
+        - "traefik.http.routers.prometheus.rule=Host(`prometheus.doe25.swarm.chas-lab.dev`)"
+        - "traefik.http.routers.prometheus.entrypoint=websecure"
+        - "traefik.http.routers.prometheus.tls.certresolver=le"
+        - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+    
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=https://grafana.doe25.swarm.chas-lab.dev
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - monitoring
+      - traefik-public
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-public"
+        - "traefik.http.routers.grafana.rule=Host(`grafana.doe25.swarm.chas-lab.dev`)"
+        - "traefik.http.routers.grafana.entrypoint=websecure"
+        - "traefik.http.routers.grafana.tls.certresolver=le"
+        - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      - monitoring
+    deploy:
+      mode: global
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    command:
+      - '--housekeeping_interval=30s'
+      - '--docker_only=true'
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - var/lib/doker:/var/lib/docker:ro
+      - /dev/disk:/dev/disk:ro
+    networks:
+      - monitoring
+    deploy:
+      mode: global
+
+configs:
+  prometheus_config:
+    file: ./prometheus.yml
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  monitoring:
+    driver: overlay
+  traefik-public:
+    external: true
