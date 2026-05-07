@@ -89,7 +89,8 @@ def deploy_stack(endpoint_id, swarm_id):
     stack_url = f"{PORTAINER_URL}/api/stacks"
     params = {"filters": json.dumps({"Name": [STACK_NAME]})}
     r_list = requests.get(stack_url, headers=headers, params=params, verify=False)
-    existing_stacks = r_list.json()
+    all_stacks = r_list.json()
+    existing_stacks = [s for s in all_stacks if s["Name"] == STACK_NAME]
 
     if existing_stacks:
         stack_id = existing_stacks[0]["Id"]

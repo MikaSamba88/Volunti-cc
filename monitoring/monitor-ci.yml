@@ -3,10 +3,10 @@ monitor-check:
   stage: lint
   image: docker:latest
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
       changes:
         - monitoring/**/*
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
       changes:
         - monitoring/**/*
   script:
