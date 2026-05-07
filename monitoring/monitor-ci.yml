@@ -1,0 +1,32 @@
+
+monitor-check:
+  stage: lint
+  image: docker:latest
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - monitoring/**/*
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      changes:
+        - monitoring/**/*
+  scripts:
+    - cd monitoring
+    - docker compose -f monitor-stack.yml config
+
+monitor-deploy:
+  stage: deploy
+  image: python:3.12-slim
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      changes:
+        - monitoring/**/*
+    - if: $CI_COMMIT_REF_SLUG == "feature-devops-portainer"
+      changes:
+        - monitoring/**/*
+  variables:
+    STACK_NAME: monitoring
+    COMPOSE_FILE: monitoring/monitor-stack.yml
+  before_script:
+    - pip install requests
+  script:
+    - python deploy.py
