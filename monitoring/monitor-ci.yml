@@ -20,7 +20,9 @@ monitor-deploy:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
       changes:
         - monitoring/**/*
-    - if: $CI_COMMIT_REF_SLUG == "feature-devops-portainer"
+    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+      when: manual
+      allow_failure: true
       changes:
         - monitoring/**/*
   variables:

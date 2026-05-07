@@ -7,6 +7,9 @@ backend-deploy:
     SUBSTITUTE_VARS: "true"
   rules:
     - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      changes:
+        - backend/**/*
+        - .gitlab-ci.yml
       variables:
         PUBLIC_HOST: "volunti"
         STACK_NAME: "volunti-$CI_DEFAULT_BRANCH"
