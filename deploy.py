@@ -19,9 +19,6 @@ mssql_sa_password = os.getenv("MSSQL_SA_PASSWORD", "")
 jwt_signing_key = os.getenv("JWT_SIGNING_KEY", "")
 ENDPOINT_ID = 8
 
-# Load the compose-file
-COMPOSE_FILE = "docker-compose.yml"
-
 if not PORTAINER_URL or not API_KEY:
     print("Error: PORTAINER_URL and PORTAINER_API_TOKEN environment variables must be set.")
     sys.exit(1)
