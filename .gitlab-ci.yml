@@ -7,6 +7,7 @@ workflow:
 
 stages:
 
+  - lint
   - build
   - test-build
   - container-build
