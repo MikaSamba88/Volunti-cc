@@ -9,7 +9,7 @@ monitor-check:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
       changes:
         - monitoring/**/*
-  scripts:
+  script:
     - cd monitoring
     - docker compose -f monitor-stack.yml config
 
