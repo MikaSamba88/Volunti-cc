@@ -6,9 +6,11 @@ monitor-check:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
       changes:
         - monitoring/**/*
+        - deploy.py
     - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
       changes:
         - monitoring/**/*
+        - ddeploy.py
   script:
     - cd monitoring
     - docker compose -f monitor-stack.yml config
