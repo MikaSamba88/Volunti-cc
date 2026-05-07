@@ -5,6 +5,7 @@ frontend-deploy:
   variables:
     STACK_NAME: "volunti-$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG"
     PUBLIC_HOST: "volunti-$CI_COMMIT_REF_SLUG"
+    SUBSTITUTE_VARS: "true"
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
       variables:
