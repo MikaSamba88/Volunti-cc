@@ -67,6 +67,16 @@ def deploy_stack(endpoint_id, swarm_id):
     with open(COMPOSE_FILE, 'r') as f:
         compose_content = f.read()
 
+    prometheus_path = os.path.join(os.path.dirname(COMPOSE_FILE), "prometheus.yml")
+    if os.path.exists(prometheus_path):
+        with open(prometheus_path, 'r') as f:
+            prometheus_content = f.read()
+        indented = "\n".join("  " + line for line in prometheus_content.splitlines())
+        compose_content = compose_content.replace(
+                "file: ./prometheus.yml",
+                f"content: |\n{indented}"
+        )
+
     if SUBSTITUTE_VARS:
         image_path = os.getenv("CI_REGISTRY_IMAGE", "")
         image_tag = os.getenv("IMAGE_TAG", "latest")
