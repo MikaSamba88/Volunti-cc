@@ -8,7 +8,12 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # From Gitlab CI/CD
 PORTAINER_URL = os.getenv("PORTAINER_URL")
 API_KEY = os.getenv("PORTAINER_TOKEN")
-STACK_NAME = f"volunti-{os.getenv('CI_PROJECT_NAME')}-{os.getenv('CI_COMMIT_REF_SLUG')}"
+
+DEFAULT_STACK_NAME = f"volunti-{os.getenv('CI_PROJECT_NAME')}'{os.getenv('CI_COMMIT_REF_SLUG')}"
+STACK_NAME = os.getenv("STACK_NAME", DEFAULT_STACK_NAME)
+COMPOSE_FILE = os.getenv("COMPOSE_FILE", "docker-compose.yml")
+
+SUBSTITUTE_VARS = os.getenv("SUBSTITUTE_VARS", "false").lower() == "true"
 PUBLIC_HOST = os.getenv("PUBLIC_HOST")
 mssql_sa_password = os.getenv("MSSQL_SA_PASSWORD", "")
 jwt_signing_key = os.getenv("JWT_SIGNING_KEY", "")
@@ -65,9 +70,11 @@ def deploy_stack(endpoint_id, swarm_id):
     with open(COMPOSE_FILE, 'r') as f:
         compose_content = f.read()
 
-    image_path = os.getenv("CI_REGISTRY_IMAGE", "")
-    image_tag = os.getenv("IMAGE_TAG", "latest")
-    project_slug = os.getenv("CI_PROJECT_NAME", "my-project").lower()
+    if SUBSTITUTE_VARS:
+        image_path = os.getenv("CI_REGISTRY_IMAGE", "")
+        image_tag = os.getenv("IMAGE_TAG", "latest")
+        project_slug = os.getenv("CI_PROJECT_NAME", "my-project").lower()
+
 
     compose_content = compose_content.replace("${CI_REGISTRY_IMAGE}", image_path)
     compose_content = compose_content.replace("${IMAGE_TAG}", image_tag)
@@ -77,6 +84,7 @@ def deploy_stack(endpoint_id, swarm_id):
     compose_content = compose_content.replace("${MSSQL_SA_PASSWORD}", mssql_sa_password)
     compose_content = compose_content.replace("${JWT_SIGNING_KEY}", jwt_signing_key)
     print(f"DEBUG: Image line is: {[line for line in compose_content.splitlines() if 'image:' in line]}")
+
 
     stack_url = f"{PORTAINER_URL}/api/stacks"
     params = {"filters": json.dumps({"Name": [STACK_NAME]})}

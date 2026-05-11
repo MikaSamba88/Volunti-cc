@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   prometheus:
     image: prom/prometheus:latest
@@ -74,7 +72,7 @@ services:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
       - /sys:/sys:ro
-      - var/lib/doker:/var/lib/docker:ro
+      - /var/lib/docker:/var/lib/docker:ro
       - /dev/disk:/dev/disk:ro
     networks:
       - monitoring
