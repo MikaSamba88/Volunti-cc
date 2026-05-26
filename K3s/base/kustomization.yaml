@@ -13,7 +13,3 @@ resources:
   - ingress/ingress.yaml
   - configmap.yaml
   - middleware.yaml
-  - sealed-secret-adminer-auth.yaml
-  - sealed-secret-jwt.yaml
-  - sealed-secret-mssql.yaml
-  - sealed-secret-registry.yaml
