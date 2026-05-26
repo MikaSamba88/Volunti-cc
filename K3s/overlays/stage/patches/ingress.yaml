@@ -11,5 +11,5 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: volunti-adminer
-  annotaitions:
+  annotations:
     traefik.io/router.middlewares: doe25-group-13-secure-headers@kubernetescrd,doe25-group-13-volunti-basic-auth@kubernetescrd
