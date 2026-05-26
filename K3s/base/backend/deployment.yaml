@@ -32,7 +32,7 @@ spec:
                   name: mssql-secret
                   key: MSSQL_SA_PASSWORD
             - name: ConnectionStrings__DefaultConnection
-              value: "Server=mssql-service,1433;Database=volunti;User Id=sa;Password=$(MSSQL_SA_PASSWORD);TrustServerCertificate=true"
+              value: "Server=burgundy-mssql-service,1433;Database=volunti;User Id=sa;Password=$(MSSQL_SA_PASSWORD);TrustServerCertificate=true"
             - name: Jwt__Key
               valueFrom:
                 secretKeyRef:

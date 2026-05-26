@@ -4,7 +4,7 @@ metadata:
   name: volunti-basic-auth
 spec:
   basicAuth:
-    secret: adminer-basic-auth
+    secret: burgundy-adminer-basic-auth
 
 ---
 
