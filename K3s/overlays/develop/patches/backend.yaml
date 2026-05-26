@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volunti-backend
+spec:
+  template:
+    spec:
+      containers:
+        - name: volunti-backend
+          env:
+            - name: Jwt__Issuer
+              value: "https://dev-volunti-api.cc.k3s.chas-lab.dev"
+            - name: Jwt__Audience
