@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: volunti
+  annotations:
+    traefik.io/router.middlewares: doe25-group-13-dev-secure-header@kubernetescrd
+spec:
+  rules:
+    - host: dev-volunti.cc.k3s.chas-lab.dev
+      http:
+        paths:
+          - path: /
+          - pathType: Prefix
+            backend:
+              service:
+                name: volunti-frontend
+                port:
+                  number: 80
+    - host: dev-volunti-api.cc.k3s.chas-lab.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: volunti-backend
+                port:
+                  number: 80
+tls:
+  - hosts:
+      - dev-volunti.cc.k3s.chas-lab.dev
+      - dev-volunti-api.cc.k3s.chas-lab.dev
+
+
