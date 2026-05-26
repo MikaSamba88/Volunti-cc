@@ -11,3 +11,4 @@ spec:
             - name: Jwt__Issuer
               value: "https://dev-volunti-api.cc.k3s.chas-lab.dev"
             - name: Jwt__Audience
+              value: "https://dev-volunti.cc.k3s.chas-lab.dev"

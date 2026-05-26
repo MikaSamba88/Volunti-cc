@@ -3,12 +3,16 @@ kind: Kustomization
 namespace: doe25-group-13-dev
 resources:
   - ../../base
+  - secrets/sealed-secret-mssql.yaml
+  - secrets/sealed-secret-jwt.yaml
+  - secrets/sealed-secret-registry.yaml
+  - secrets/sealed-secret-adminer-auth.yaml
 
 images:
-  - name: registry.chas-lab.dev/chas-challenge-2026/group-13/burgundy/backend
+  - name: registry.chas-lab.dev/chas-challenge-2026/grupp-13/burgundy/backend
     newTag: develop
-  - name: registry.chas-lab.dev/chas-challenge-2026/group-13/burgundy/frontend
-    name: develop
+  - name: registry.chas-lab.dev/chas-challenge-2026/grupp-13/burgundy/frontend
+    newTag: develop
 
 patches:
   - path: patches/ingress.yaml
