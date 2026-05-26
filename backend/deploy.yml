@@ -3,9 +3,8 @@ backend-deploy:
   image: python:3.12-slim
   rules:
     - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
-    - if: '$CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
-      when: manual
-      allow_failure: true
+    - if: '$CI_COMMIT_REF_NAME == "develop"'
+    - when: never
   before_script:
     - apt-get update && apt-get install -y curl
     - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -26,8 +25,9 @@ backend-stop:
   rules:
     - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
       when: manual
-    - if: '$CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+    - if: '$CI_COMMIT_REF_NAME == "develop"'
       when: manual
+    - when: never
   before_script:
     - apt-get update && apt-get install -y curl
     - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
