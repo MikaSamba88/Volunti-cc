@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: volunti-frontend
-  namespace: doe25-group-13
 spec:
   replicas: 1
   selector:
