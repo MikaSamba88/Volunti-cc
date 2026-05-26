@@ -4,7 +4,8 @@ backend-deploy:
   rules:
     - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
     - if: '$CI_COMMIT_REF_NAME == "develop"'
-    - when: never
+    - when: manual
+      allow_failure: true
   before_script:
     - apt-get update && apt-get install -y curl
     - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
