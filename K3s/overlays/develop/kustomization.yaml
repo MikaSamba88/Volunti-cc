@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: doe25-group-13-dev
+resources:
+  - ../../base
+
+images:
+  - name: registry.chas-lab.dev/chas-challenge-2026/group-13/burgundy/backend
+    newTag: develop
+  - name: registry.chas-lab.dev/chas-challenge-2026/group-13/burgundy/frontend
+    name: develop
+
+patches:
+  - path: patches/ingress.yaml
+  - path: patches/backend.yaml
+
