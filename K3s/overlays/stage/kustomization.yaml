@@ -1,0 +1,5 @@
+namespace: stage
+resources:
+  - ../../base
+patches:
+  - path: patches/backend-patch.yaml
