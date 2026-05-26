@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: volunti
   annotations:
-    traefik.io/router.middlewares: doe25-group-13-dev-secure-header@kubernetescrd
+    traefik.io/router.middlewares: doe25-group-13-dev-secure-headers@kubernetescrd
 spec:
   rules:
     - host: dev-volunti.cc.k3s.chas-lab.dev
       http:
         paths:
           - path: /
-          - pathType: Prefix
+            pathType: Prefix
             backend:
               service:
                 name: volunti-frontend
@@ -50,7 +50,7 @@ spec:
               service:
                 name: adminer
                 port:
-                  number: 80
+                  number: 8080
   tls:
     - hosts:
         - dev-adminer-volunti.cc.k3s.chas-lab.dev
