@@ -2,7 +2,6 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: volunti-basic-auth
-  namespace: doe25-group-13
 spec:
   basicAuth:
     secret: adminer-basic-auth
@@ -13,7 +12,6 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: secure-headers
-  namespace: doe25-group-13
 spec:
   headers:
     stsSeconds: 31536000
@@ -30,7 +28,6 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: https-re-routing
-  namespace: doe25-group-13
 spec:
   redirectScheme:
     scheme: https
