@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: kustomization
+
+resources:
+  - adminer/deployment.yaml
+  - adminer/service.yaml
+  - backend/deployment.yaml
+  - backend/service.yaml
+  - database/mssql-statefulset.yaml
+  - database/mssql-service.yaml
+  - frontend/deployment.yaml
+  - frontend/service.yaml
+  - ingress/ingress.yaml
+  - configmap.yaml
+  - middleware.yaml
+  - sealed-secret-adminer-auth.yaml
+  - sealed-secret-jwt.yaml
+  - sealed-secret-mssql.yaml
+  - sealed-secret-registry.yaml
