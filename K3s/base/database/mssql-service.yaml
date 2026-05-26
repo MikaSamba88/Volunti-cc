@@ -1,0 +1,18 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql-service
+  namespace: doe25-group-13
+spec:
+  clusterIP: None
+  selector:
+    app: mssql-sts
+  ports:
+  - name: mssql
+    protocol: TCP
+    port: 1433
+    targetPort: 1433
+  
+---
+

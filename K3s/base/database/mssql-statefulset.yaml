@@ -1,0 +1,49 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mssql-sts
+  namespace: doe25-group-13
+spec:
+  selector:
+    matchLabels:
+      app: mssql-sts
+  serviceName: "mssql-sts"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mssql-sts
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mssql-sts
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+        - containerPort: 1433
+          name: mssql
+        env:
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: MSSQL_PID
+            value: "Developer"
+          - name: MSSQL_SA_PASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: mssql-secret
+                key: MSSQL_SA_PASSWORD
+        volumeMounts:
+        - name: mssql-data
+          mountPath: /var/opt/mssql
+  volumeClaimTemplates:
+  - metadata:
+      name: mssql-data
+    spec:
+      storageClassName: local-path
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+---
+

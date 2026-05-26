@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volunti-frontend
+  namespace: doe25-group-13
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: volunti-frontend
+  template:
+    metadata:
+      labels:
+        app: volunti-frontend
+    spec:
+      imagePullSecrets:
+        - name: registry-credentials
+      containers:
+      - name: volunti-frontend
+        image: registry.chas-lab.dev/chas-challenge-2026/grupp-13/burgundy/frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 20
+        securityContext:
+          runAsNonRoot: false
+          allowPrivilegeEscalation: false
+
+
+---

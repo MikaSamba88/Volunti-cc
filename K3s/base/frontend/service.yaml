@@ -1,0 +1,16 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: volunti-frontend
+  namespace: doe25-group-13
+spec:
+  selector:
+    app: volunti-frontend
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+---
+
