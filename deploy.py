@@ -33,7 +33,7 @@ def main():
 
     run_script([
         "kubectl", "set", "image", DEPLOYMENT,
-        f"burgundy-volunti-{COMPONENT}={IMAGE}",
+        f"volunti-{COMPONENT}={IMAGE}",
         "-n", NAMESPACE,
     ])
 
