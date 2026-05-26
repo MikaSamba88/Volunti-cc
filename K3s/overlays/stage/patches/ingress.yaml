@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io.v1
+kind: Ingress
+metadata:
+  name: volunti
+  annotaitions:
+    traefik.io/router.middleware: doe25-group-13-secure-headers@kubernetescrd
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: volunti-adminer
+  annotaitions:
+    traefik.io/router.middleware: doe25-group-13-secure-headers@kubernetescrd,doe25-group-13-volunti-basic-auth@kubernetescrd
