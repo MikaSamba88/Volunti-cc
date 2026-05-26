@@ -38,7 +38,7 @@ kind: Ingress
 metadata:
   name: volunti-adminer
   annotations:
-    traefik.io/router.middlewares: doe25-group-13-dev-secure-header@kubernetescrd,doe25-group-13-dev-volunti-basic-auth@kubernetescrd
+    traefik.io/router.middlewares: doe25-group-13-dev-secure-headers@kubernetescrd,doe25-group-13-dev-volunti-basic-auth@kubernetescrd
 spec:
   rules:
     - host: dev-adminer-volunti.cc.k3s.chas-lab.dev
