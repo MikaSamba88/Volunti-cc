@@ -9,7 +9,7 @@ TAG = os.getenv("CI_COMMIT_SHORT_SHA")
 COMPONENT = sys.argv[1]
 
 OVERLAY = "K3s/overlays/stage" if BRANCH == DEFAULT_BRANCH else "K3s/overlays/develop"
-NAMESPACE = "doe25-group-13" if BRANCH == DEFAULT_BRANCH else "doe25-group-13-dev"
+NAMESPACE = "doe25-group-13"
 DEPLOYMENT = f"deployment/burgundy-volunti-{COMPONENT}"
 IMAGE = f"{REGISTRY}/{COMPONENT}:{TAG}"
 
