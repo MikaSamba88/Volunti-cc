@@ -11,9 +11,9 @@ resources:
 
 images:
   - name: registry.chas-lab.dev/chas-challenge-2026/grupp-13/burgundy/backend
-    newTag: develop
+    newTag: latest
   - name: registry.chas-lab.dev/chas-challenge-2026/grupp-13/burgundy/frontend
-    newTag: develop
+    newTag: latest
 
 patches:
   - path: patches/ingress.yaml
