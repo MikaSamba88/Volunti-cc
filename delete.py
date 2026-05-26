@@ -1,8 +1,12 @@
+import subprocess
 import os
 import sys
-import subprocess
 
-NAMESPACE = os.getenv("KUBE_NAMESPACE", "doe25-group-13")
+BRANCH = os.getenv("CI_COMMIT_REF_NAME")
+DEFAULT_BRANCH = os.getenv("CI_DEFAULT_BRANCH", "main")
+
+OVERLAY = "K3s/overlays/stage" if BRANCH == DEFAULT_BRANCH else "K3s/overlays/develop"
+
 
 def run_script(cmd, check=True):
     print(f"$ {' '.join(cmd)}", flush=True)
@@ -11,11 +15,12 @@ def run_script(cmd, check=True):
         sys.exit(result.returncode)
     return result
 
-def delete_environment():
-    print(f"Deleting environment: {NAMESPACE}")
-    run_script(["kubectl", "delete", "deployment", "backend", "frontend",
-                "-n", NAMESPACE, "--ignore-not-found"])
+
+def main():
+    print(f"Deleting environment for branch '{BRANCH}' using overlay '{OVERLAY}'")
+    run_script(["kubectl", "delete", "-k", OVERLAY, "--ignore-not-found"])
     print("Completed")
 
+
 if __name__ == "__main__":
-    delete_environment()
+    main()
