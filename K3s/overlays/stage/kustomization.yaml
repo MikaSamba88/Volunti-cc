@@ -1,5 +1,13 @@
-namespace: stage
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: doe25-group-13
 resources:
   - ../../base
+  - secrets/sealed-secret-mssql.yaml
+  - secrets/sealed-secret-jwt.yaml
+  - secrets/sealed-secret-registry.yaml
+  - secrets/sealed-secret-adminer-auth.yaml
 patches:
-  - path: patches/backend-patch.yaml
+  - path: patches/ingress.yaml
+  - path: patches/backend.yaml
+
