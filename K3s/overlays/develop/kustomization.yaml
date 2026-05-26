@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: doe25-group-13-dev
 namePrefix: burgundy-
 resources:
+  - namespace.yaml
   - ../../base
   - secrets/sealed-secret-mssql.yaml
   - secrets/sealed-secret-jwt.yaml
